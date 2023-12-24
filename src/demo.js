@@ -4,12 +4,12 @@ floppy({
   antialias: false
 });
 
-CENTERX = WIDTH / 2
-CENTERY = HEIGHT / 2
-color = 6
+color = 0
 
-function update () {
-  radius = math.rand() * CENTERX
+function update (dt) {
+  CENTERX = WIDTH / 2
+  CENTERY = HEIGHT / 2
+  radius = math.rand() * CENTERY
   color = TICKS
 }
 

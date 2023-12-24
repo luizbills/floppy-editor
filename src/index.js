@@ -1,18 +1,19 @@
 import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { keymap } from "@codemirror/view";
-import { esLint, javascript } from "@codemirror/lang-javascript";
-// import { linter, lintGutter } from "@codemirror/lint";
+import { javascript, javascriptLanguage } from "@codemirror/lang-javascript";
 import { indentWithTab } from "@codemirror/commands";
-// import * as eslint from "eslint-linter-browserify";
+import { oneDark } from "@codemirror/theme-one-dark";
 import demo from "./demo";
 import template from "./template";
+import customCompletions from "./autocomplete";
 
 const code = document.querySelector(".code");
 const game = document.querySelector(".game");
 const playButton = document.querySelector(".play");
 const stopButton = document.querySelector(".stop");
 const iframe = document.querySelector("#frame");
+const smallScreen = innerWidth < 1024;
 
 playButton.addEventListener("click", () => {
   runCode();
@@ -35,6 +36,7 @@ function runCode() {
 let updateTimeout = 0;
 const delay = 1000;
 function previewChanges(update) {
+  if (smallScreen) return;
   if (update.docChanged) {
     if (updateTimeout) {
       clearTimeout(updateTimeout);
@@ -44,28 +46,21 @@ function previewChanges(update) {
   }
 }
 
-// eslint configuration
-// const config = {
-//   parserOptions: {
-//     ecmaVersion: 2019,
-//     sourceType: "module",
-//   },
-//   env: {
-//     browser: true,
-//     node: false,
-//   },
-//   rules: {},
-// };
-
 const state = EditorState.create({
   doc: demo,
   extensions: [
     basicSetup,
     keymap.of([indentWithTab]),
+    oneDark,
     javascript(),
-    // lintGutter(),
-    // linter(esLint(new eslint.Linter(), config)),
+    javascriptLanguage.data.of({
+      autocomplete: customCompletions,
+    }),
     EditorView.updateListener.of(previewChanges),
+    EditorView.theme({
+      "&": { height: "100%" },
+      ".cm-scroller": { overflow: "auto" },
+    }),
   ],
 });
 
@@ -74,4 +69,4 @@ const editor = new EditorView({
   parent: document.querySelector(".code"),
 });
 
-runCode();
+if (!smallScreen) runCode();
