@@ -2,9 +2,9 @@ import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { keymap } from "@codemirror/view";
 import { esLint, javascript } from "@codemirror/lang-javascript";
-import { linter, lintGutter } from "@codemirror/lint";
+// import { linter, lintGutter } from "@codemirror/lint";
 import { indentWithTab } from "@codemirror/commands";
-import * as eslint from "eslint-linter-browserify";
+// import * as eslint from "eslint-linter-browserify";
 import demo from "./demo";
 import template from "./template";
 
@@ -45,17 +45,17 @@ function previewChanges(update) {
 }
 
 // eslint configuration
-const config = {
-  parserOptions: {
-    ecmaVersion: 2019,
-    sourceType: "module",
-  },
-  env: {
-    browser: true,
-    node: false,
-  },
-  rules: {},
-};
+// const config = {
+//   parserOptions: {
+//     ecmaVersion: 2019,
+//     sourceType: "module",
+//   },
+//   env: {
+//     browser: true,
+//     node: false,
+//   },
+//   rules: {},
+// };
 
 const state = EditorState.create({
   doc: demo,
@@ -63,8 +63,8 @@ const state = EditorState.create({
     basicSetup,
     keymap.of([indentWithTab]),
     javascript(),
-    lintGutter(),
-    linter(esLint(new eslint.Linter(), config)),
+    // lintGutter(),
+    // linter(esLint(new eslint.Linter(), config)),
     EditorView.updateListener.of(previewChanges),
   ],
 });
