@@ -38,6 +38,7 @@ function update (dt) {
   if (TAPPED) {
     centerx = TAPX
     centery = TAPY
+    sfx(7)
   }
 
   radius = math.rand() * centery
