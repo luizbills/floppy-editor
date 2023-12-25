@@ -125,7 +125,13 @@ export default function customCompletions(context) {
         label: "sfx",
         type: "function",
         apply: "sfx(0)",
-        detail: "(sound = 0)",
+        detail: "(sound = 0, volume = 1, pitch = 0, randomness = 0)",
+      },
+      {
+        label: "zzfx",
+        type: "function",
+        apply: "zzfx(",
+        detail: "(...params)",
       },
       {
         label: "math.rand",

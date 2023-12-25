@@ -47,7 +47,7 @@ function previewChanges(update) {
 }
 
 const state = EditorState.create({
-  doc: demo,
+  doc: loadFromStorage() || demo(),
   extensions: [
     basicSetup,
     keymap.of([indentWithTab]),
@@ -70,3 +70,13 @@ const editor = new EditorView({
 });
 
 if (!smallScreen) runCode();
+
+// autosave
+const autosave = 5000; // 5 seconds
+setInterval(() => {
+  localStorage.setItem("floppy_code", editor.state.doc.toString());
+}, autosave);
+
+function loadFromStorage() {
+  return localStorage.getItem("floppy_code");
+}
