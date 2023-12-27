@@ -14,12 +14,24 @@ if (url.searchParams.get("reset") !== null) {
   window.location = location.origin;
 }
 
+const desktopExtensions = [];
 const code = document.querySelector(".code");
 const game = document.querySelector(".game");
 const playButton = document.querySelector(".play");
 const stopButton = document.querySelector(".stop");
 const iframe = document.querySelector("#frame");
 const smallScreen = innerWidth < 1024;
+let library = null;
+
+playButton.style.display = "none";
+
+fetch("floppy.js")
+  .then((response) => response.text())
+  .then((source) => {
+    library = source;
+    playButton.style.display = "";
+    if (!smallScreen) runCode();
+  });
 
 playButton.addEventListener("click", () => {
   runCode();
@@ -34,22 +46,26 @@ stopButton.addEventListener("click", () => {
 });
 
 function runCode() {
+  if (!library) return;
   const code = editor.state.doc.toString();
-  const content = template.replace(/{code}/, code);
+  let content = template.replace(/{game}/, code);
+  content = content.replace(/{library}/, library);
   iframe.srcdoc = content;
 }
 
-let updateTimeout = 0;
-const delay = 1000;
-function previewChanges(update) {
-  if (smallScreen) return;
-  if (update.docChanged) {
-    if (updateTimeout) {
-      clearTimeout(updateTimeout);
-      updateTimeout = 0;
+if (!smallScreen) {
+  let updateTimeout = 0;
+  const delay = 1000;
+  function previewChanges(update) {
+    if (update.docChanged) {
+      if (updateTimeout) {
+        clearTimeout(updateTimeout);
+        updateTimeout = 0;
+      }
+      updateTimeout = setTimeout(runCode, delay);
     }
-    updateTimeout = setTimeout(runCode, delay);
   }
+  desktopExtensions.push(EditorView.updateListener.of(previewChanges));
 }
 
 const state = EditorState.create({
@@ -62,11 +78,11 @@ const state = EditorState.create({
     javascriptLanguage.data.of({
       autocomplete: customCompletions,
     }),
-    EditorView.updateListener.of(previewChanges),
     EditorView.theme({
       "&": { height: "100%" },
       ".cm-scroller": { overflow: "auto" },
     }),
+    ...desktopExtensions,
   ],
 });
 
@@ -74,8 +90,6 @@ const editor = new EditorView({
   state,
   parent: document.querySelector(".code"),
 });
-
-if (!smallScreen) runCode();
 
 // autosave
 const autosave = 5000; // 5 seconds
@@ -89,4 +103,8 @@ function loadFromStorage() {
 
 function resetStorage() {
   localStorage.clear();
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
 }

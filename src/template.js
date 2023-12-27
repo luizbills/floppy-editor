@@ -31,13 +31,11 @@ export default `
       // catch errors
       const err = document.getElementById('err')
       window.addEventListener('error', (ev) => {
-        err.textContent = ev.message + ' in line ' + (ev.lineno - 38)
+        err.textContent = ev.message + ' in line ' + (ev.lineno - 37)
         err.style.display = 'block'
       })
     </script>
-    <script src="floppy.js"></script>
-    <script>
-      {code}
-    </script>
+    <script>{library}</script>
+    <script>{game}</script>
   </body>
 </html>`.trim();
