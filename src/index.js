@@ -8,6 +8,12 @@ import demo from "./demo";
 import template from "./template";
 import customCompletions from "./autocomplete";
 
+const url = new URL(location);
+if (url.searchParams.get("reset") !== null) {
+  resetStorage();
+  window.location = location.origin;
+}
+
 const code = document.querySelector(".code");
 const game = document.querySelector(".game");
 const playButton = document.querySelector(".play");
@@ -79,4 +85,8 @@ setInterval(() => {
 
 function loadFromStorage() {
   return localStorage.getItem("floppy_code");
+}
+
+function resetStorage() {
+  localStorage.clear();
 }

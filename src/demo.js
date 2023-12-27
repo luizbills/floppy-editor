@@ -12,7 +12,7 @@ function init () {
 }
 
 function update (dt) {
-  color = TICKS
+  color = ELAPSED * 32 % 16
 
   if (TAPPED) {
     centerx = TAPX
@@ -21,10 +21,11 @@ function update (dt) {
   }
 
   radius = math.rand() * centery
+  linew = math.randi(1, 50)
 }
 
 function draw () {
   clear(0)
-  circle(centerx, centery, radius, color)
+  circle(centerx, centery, radius, color, linew)
 }
 `.trim() + "\n";

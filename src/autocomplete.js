@@ -7,20 +7,25 @@ export default function customCompletions(context) {
     options: [
       // global constants
       { label: "CANVAS", type: "constant", info: "game canvas HTML element" },
-      { label: "WIDTH", type: "constant", info: "width of the game screen" },
-      { label: "HEIGHT", type: "constant", info: "height of the game screen" },
+      {
+        label: "PARENT",
+        type: "constant",
+        info: "the parent element of the game canvas",
+      },
+      { label: "WIDTH", type: "variable", info: "width of the game screen" },
+      { label: "HEIGHT", type: "variable", info: "height of the game screen" },
       {
         label: "TAPPED",
         type: "variable",
         info: "true when the game screen is tapped",
       },
-      { label: "TAPX", type: "constant", info: "position X of the tap" },
-      { label: "TAPY", type: "constant", info: "position Y of the tap" },
       {
-        label: "TICKS",
+        label: "TAPPING",
         type: "variable",
-        info: "number of updates since the game started",
+        info: "true when the game screen is holding the mouse/touch",
       },
+      { label: "TAPX", type: "variable", info: "position X of the tap" },
+      { label: "TAPY", type: "variable", info: "position Y of the tap" },
       {
         label: "ELAPSED",
         type: "variable",
@@ -34,17 +39,17 @@ export default function customCompletions(context) {
       },
       // global functions
       {
-        label: "rect",
-        type: "function",
-        apply: "rect(",
-        detail: "(x, y, width, height, color = 0, lineWidth = 1)",
-      },
-      {
         label: "clear",
         type: "function",
         apply: "clear(",
         detail: "(color = null)",
         info: "clear the game screen",
+      },
+      {
+        label: "rect",
+        type: "function",
+        apply: "rect(",
+        detail: "(x, y, width, height, color = 0, lineWidth = 1)",
       },
       {
         label: "rectfill",
@@ -75,6 +80,30 @@ export default function customCompletions(context) {
         type: "function",
         apply: "ovalfill(",
         detail: "(x, y, rx, ry, color = 0)",
+      },
+      {
+        label: "triangle",
+        type: "function",
+        apply: "triangle(",
+        detail: "(x1, y1, x2, y2, x3, y3, color = 0, lineWidth = 1)",
+      },
+      {
+        label: "trianglefill",
+        type: "function",
+        apply: "trianglefill(",
+        detail: "(x1, y1, x2, y2, x3, y3, color = 0)",
+      },
+      {
+        label: "poly",
+        type: "function",
+        apply: "poly([",
+        detail: "(points, color = 0, lineWidth = 1)",
+      },
+      {
+        label: "polyfill",
+        type: "function",
+        apply: "polyfill([",
+        detail: "(points, color = 0)",
       },
       {
         label: "line",
@@ -126,12 +155,6 @@ export default function customCompletions(context) {
         type: "function",
         apply: "sfx(0)",
         detail: "(sound = 0, volume = 1, pitch = 0, randomness = 0)",
-      },
-      {
-        label: "zzfx",
-        type: "function",
-        apply: "zzfx(",
-        detail: "(...params)",
       },
       {
         label: "math.rand",
