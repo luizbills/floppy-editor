@@ -118,6 +118,12 @@ export default function customCompletions(context) {
         detail: "(x, y, text, color = 0, size = null, font = 'monospace')",
       },
       {
+        label: "textstyle",
+        type: "function",
+        apply: "textstyle(",
+        detail: "(align = 'left', baseline = 'top')",
+      },
+      {
         label: "image",
         type: "function",
         apply: "image(",
