@@ -21,11 +21,10 @@ function update (dt) {
   }
 
   radius = math.rand() * centery
-  linew = math.randi(1, 50)
 }
 
 function draw () {
   clear(0)
-  circle(centerx, centery, radius, color, linew)
+  circle(centerx, centery, radius, color)
 }
 `.trim() + "\n";

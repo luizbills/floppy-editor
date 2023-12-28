@@ -49,7 +49,7 @@ export default function customCompletions(context) {
         label: "rect",
         type: "function",
         apply: "rect(",
-        detail: "(x, y, width, height, color = 0, lineWidth = 1)",
+        detail: "(x, y, width, height, color = 0)",
       },
       {
         label: "rectfill",
@@ -61,7 +61,7 @@ export default function customCompletions(context) {
         label: "circle",
         type: "function",
         apply: "circle(",
-        detail: "(x, y, radius, color = 0, lineWidth = 1)",
+        detail: "(x, y, radius, color = 0)",
       },
       {
         label: "circlefill",
@@ -73,7 +73,7 @@ export default function customCompletions(context) {
         label: "oval",
         type: "function",
         apply: "oval(",
-        detail: "(x, y, rx, ry, color = 0, lineWidth = 1)",
+        detail: "(x, y, rx, ry, color = 0)",
       },
       {
         label: "ovalfill",
@@ -85,7 +85,7 @@ export default function customCompletions(context) {
         label: "triangle",
         type: "function",
         apply: "triangle(",
-        detail: "(x1, y1, x2, y2, x3, y3, color = 0, lineWidth = 1)",
+        detail: "(x1, y1, x2, y2, x3, y3, color = 0)",
       },
       {
         label: "trianglefill",
@@ -97,7 +97,7 @@ export default function customCompletions(context) {
         label: "poly",
         type: "function",
         apply: "poly([",
-        detail: "(points, color = 0, lineWidth = 1)",
+        detail: "(points, color = 0)",
       },
       {
         label: "polyfill",
@@ -112,15 +112,21 @@ export default function customCompletions(context) {
         detail: "(x, y, rx, ry, color = 0)",
       },
       {
+        label: "linestyle",
+        type: "function",
+        apply: "linestyle(",
+        detail: "(lineWidth, lineJoin, lineDash)",
+      },
+      {
         label: "text",
         type: "function",
         apply: "text(",
         detail: "(x, y, text, color = 0, size = null, font = 'monospace')",
       },
       {
-        label: "textstyle",
+        label: "textalign",
         type: "function",
-        apply: "textstyle(",
+        apply: "textalign(",
         detail: "(align = 'left', baseline = 'top')",
       },
       {
@@ -210,6 +216,12 @@ export default function customCompletions(context) {
         type: "function",
         apply: "math.cos(",
         detail: "(radians)",
+      },
+      {
+        label: "math.abs",
+        type: "function",
+        apply: "math.abs(",
+        detail: "(value)",
       },
     ],
   };
