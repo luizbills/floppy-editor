@@ -53,6 +53,20 @@ export default function mobileBar(editorView) {
     });
 
     buttons.appendChild(button);
+
+    let pendingUpdate = false;
+    function viewportHandler(event) {
+      if (pendingUpdate) return;
+      const viewport = event.target;
+      pendingUpdate = true;
+      requestAnimationFrame(() => {
+        pendingUpdate = false;
+        buttons.style.top =
+          viewport.height - buttons.getBoundingClientRect().height + "px";
+      });
+    }
+
+    window.visualViewport.addEventListener("resize", viewportHandler);
   }
 
   parent.appendChild(buttons);
