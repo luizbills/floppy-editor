@@ -1,5 +1,5 @@
 const cacheName = "luizbills.floppy-editor-v1";
-const version = "1.0.1";
+const version = "1.0.2";
 
 const precacheResources = [
   "/",
