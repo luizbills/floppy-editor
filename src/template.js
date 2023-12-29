@@ -31,7 +31,7 @@ export default `
       // catch errors
       const err = document.getElementById('err')
       window.addEventListener('error', (ev) => {
-        err.textContent = ev.message + ' in line ' + (ev.lineno - 37)
+        err.textContent = ev.message + ' in line ' + (ev.lineno - 38)
         err.style.display = 'block'
       })
     </script>

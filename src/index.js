@@ -7,6 +7,7 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import demo from "./demo";
 import template from "./template";
 import customCompletions from "./autocomplete";
+import mobileBar from "./mobileBar";
 
 const url = new URL(location);
 if (url.searchParams.get("reset") !== null) {
@@ -21,6 +22,8 @@ const playButton = document.querySelector(".play");
 const stopButton = document.querySelector(".stop");
 const iframe = document.querySelector("#frame");
 const smallScreen = innerWidth < 1024;
+const isMobile = navigator.userAgent.match(/android|iphone|ipad/i) !== null;
+
 let library = null;
 
 playButton.style.display = "none";
@@ -47,7 +50,7 @@ stopButton.addEventListener("click", () => {
 
 function runCode() {
   if (!library) return;
-  const code = editor.state.doc.toString();
+  const code = codeEditor.state.doc.toString();
   let content = template.replace(/{game}/, code);
   content = content.replace(/{library}/, library);
   iframe.srcdoc = content;
@@ -72,7 +75,17 @@ const state = EditorState.create({
   doc: loadFromStorage() || demo(),
   extensions: [
     basicSetup,
-    keymap.of([indentWithTab]),
+    // Ctrl+S to run the code
+    keymap.of([
+      indentWithTab,
+      {
+        key: "Ctrl-s",
+        run() {
+          runCode();
+          return true;
+        },
+      },
+    ]),
     oneDark,
     javascript(),
     javascriptLanguage.data.of({
@@ -86,7 +99,7 @@ const state = EditorState.create({
   ],
 });
 
-const editor = new EditorView({
+window.codeEditor = new EditorView({
   state,
   parent: document.querySelector(".code"),
 });
@@ -94,7 +107,7 @@ const editor = new EditorView({
 // autosave
 const autosave = 5000; // 5 seconds
 setInterval(() => {
-  localStorage.setItem("floppy_code", editor.state.doc.toString());
+  localStorage.setItem("floppy_code", codeEditor.state.doc.toString());
 }, autosave);
 
 function loadFromStorage() {
@@ -106,5 +119,14 @@ function resetStorage() {
 }
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+  if (
+    "127.0.0.1" !== location.hostname ||
+    location.search.includes("debug_sw")
+  ) {
+    navigator.serviceWorker.register("sw.js");
+  }
+}
+
+if (isMobile) {
+  mobileBar(codeEditor);
 }
