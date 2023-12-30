@@ -28,25 +28,25 @@ floppy({
 
 function init () {
   color = 0
-  centerx = WIDTH / 2
-  centery = HEIGHT / 2
+  x = CENTERX
+  y = CENTERY
 }
 
 function update (dt) {
   color = ELAPSED * 32 % 16
 
   if (TAPPED) {
-    centerx = TAPX
-    centery = TAPY
+    x = TAPX
+    y = TAPY
     sfx(7)
   }
 
-  radius = math.rand() * centery
+  radius = math.rand() * y
 }
 
 function draw () {
   clear(0)
-  circle(centerx, centery, radius, color)
+  circle(x, y, radius, color)
 }
 `.trim()+`
 `;var Od=`
