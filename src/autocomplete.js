@@ -33,6 +33,16 @@ export default function customCompletions(context) {
       },
       { label: "FPS", type: "variable", info: "frames per second" },
       {
+        label: "CENTERX",
+        type: "variable",
+        info: "middle X of the game screen",
+      },
+      {
+        label: "CENTERY",
+        type: "variable",
+        info: "middle Y of the game screen",
+      },
+      {
         label: "CANVAS.ctx",
         type: "constant",
         info: "canvas rendering 2d context",
