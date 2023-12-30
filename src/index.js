@@ -42,11 +42,14 @@ playButton.addEventListener("click", () => {
   game.style.display = "block";
 });
 
-stopButton.addEventListener("click", () => {
+stopButton.addEventListener("click", stopGame);
+document.addEventListener("backbutton", stopGame);
+function stopGame(evt) {
+  evt.preventDefault();
   code.style.display = "block";
   game.style.display = "none";
   iframe.srcdoc = "";
-});
+}
 
 function runCode() {
   if (!library) return;
@@ -95,6 +98,7 @@ const state = EditorState.create({
       "&": { height: "100%" },
       ".cm-scroller": { overflow: "auto" },
     }),
+    EditorView.lineWrapping,
     ...desktopExtensions,
   ],
 });
