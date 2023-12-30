@@ -2,7 +2,7 @@
   "name": "Floppy Editor",
   "short_name": "Floppy",
   "description": "A simple game editor.",
-  "start_url": ".",
+  "start_url": "/?v=1.1.1",
   "background_color": "#000",
   "theme_color": "#ffc76e",
   "display": "standalone",
