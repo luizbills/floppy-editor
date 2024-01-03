@@ -20,11 +20,11 @@ function update (dt) {
     sfx(7)
   }
 
-  radius = math.rand() * y
+  radius = rand() * y
 }
 
 function draw () {
   clear(0)
-  circle(x, y, radius, color)
+  circ(x, y, radius, color)
 }
 `.trim() + "\n";
