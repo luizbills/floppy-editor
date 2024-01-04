@@ -4,6 +4,7 @@ import { keymap } from "@codemirror/view";
 import { javascript, javascriptLanguage } from "@codemirror/lang-javascript";
 import { indentWithTab } from "@codemirror/commands";
 import { oneDark } from "@codemirror/theme-one-dark";
+import { show, hide, $ } from "./utils";
 import demo from "./demo";
 import template from "./template";
 import customCompletions from "./autocomplete";
@@ -16,38 +17,43 @@ if (url.searchParams.get("reset") !== null) {
 }
 
 const desktopExtensions = [];
-const code = document.querySelector(".code");
-const game = document.querySelector(".game");
-const playButton = document.querySelector(".play");
-const stopButton = document.querySelector(".stop");
-const iframe = document.querySelector("#frame");
+const code = $(".code");
+const game = $(".game");
+const playButton = $("#play");
+const stopButton = $("#stop");
+const iframe = $("#frame");
 const smallScreen = innerWidth < 1024;
 const isMobile = navigator.userAgent.match(/android|iphone|ipad/i) !== null;
-
 let library = null;
-
-playButton.style.display = "none";
 
 fetch("floppy.js")
   .then((response) => response.text())
   .then((source) => {
     library = source;
-    playButton.style.display = "";
-    if (!smallScreen) runCode();
+    if (!smallScreen) {
+      runCode();
+    } else {
+      show(playButton);
+      hide(game);
+    }
   });
 
 playButton.addEventListener("click", () => {
+  hide(code);
+  show(game);
+  hide(playButton);
+  show(stopButton);
   runCode();
-  code.style.display = "none";
-  game.style.display = "block";
 });
 
 stopButton.addEventListener("click", stopGame);
 document.addEventListener("backbutton", stopGame);
 function stopGame(evt) {
   evt.preventDefault();
-  code.style.display = "block";
-  game.style.display = "none";
+  show(code);
+  hide(game);
+  show(playButton);
+  hide(stopButton);
   iframe.srcdoc = "";
 }
 
@@ -105,7 +111,7 @@ const state = EditorState.create({
 
 window.codeEditor = new EditorView({
   state,
-  parent: document.querySelector(".code"),
+  parent: $(".code"),
 });
 
 // autosave

@@ -6,7 +6,7 @@ export default `
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Floppy Editor</title>
     <style>
-      html, body {height: 100%}
+      html, body {height: 100%;}
       body {margin: 0}
       #err {
         position: absolute;

@@ -3,11 +3,17 @@ const cacheName = "luizbills.floppy-editor-v1";
 const precacheResources = [
   "/",
   "/index.html",
+  "/cheatsheet.html",
   "/app.css",
   "/app.js",
   "/floppy.js",
+  "/prism/prism.css",
+  "/prism/prism.js",
+  "/prism/prism-typescript.js",
+  "/prism/prism-autolinker.js",
   "/icons/favicon.ico",
   "/icons/icon.png",
+  "/images/colors.png",
   "/manifest.json",
 ];
 
